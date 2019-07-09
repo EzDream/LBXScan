@@ -11,6 +11,7 @@
 #import <Photos/Photos.h>
 
 @interface LBXScanViewController ()
+@property (nonatomic, assign) BOOL isPauseScan;
 @end
 
 @implementation LBXScanViewController
@@ -18,6 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.isPauseScan = NO;
     // Do any additional setup after loading the view.
     
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
@@ -46,6 +49,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    self.isPauseScan = NO;
     
     [self drawScanView];
     
@@ -87,7 +92,10 @@
 //        _cameraInvokeMsg = NSLocalizedString(@"wating...", nil);
     }
     
-    [_qRScanView startDeviceReadyingWithText:_cameraInvokeMsg];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+         [_qRScanView startDeviceReadyingWithText:_cameraInvokeMsg];
+    });
 #endif
 }
 
@@ -262,7 +270,8 @@
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
  
-    [self stopScan];
+//    [self stopScan];
+    self.isPauseScan = YES;
     
 #ifdef LBXScan_Define_UI
     [_qRScanView stopScanAnimation];
@@ -304,7 +313,7 @@
 - (void)scanResultWithArray:(NSArray<LBXScanResult*>*)array
 {
     //设置了委托的处理
-    if (_delegate) {
+    if (_delegate && !self.isPauseScan) {
         [_delegate scanResultWithArray:array];
     }
     

@@ -25,7 +25,7 @@
 #endif
 
 #ifdef LBXScan_Define_ZBar
-#import "ZBarSDK.h"
+#import <ZBarSDK/ZBarSDK.h>
 #import "LBXZBarWrapper.h"//ZBar扫码封装
 #endif
 
@@ -171,6 +171,5 @@ typedef NS_ENUM(NSInteger, SCANCODETYPE) {
 
 //关闭扫描
 - (void)stopScan;
-
 
 @end

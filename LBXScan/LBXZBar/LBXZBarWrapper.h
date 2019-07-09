@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ZBarSDK.h"
+#import <ZBarSDK/ZBarSDK.h>
 
 #define LBXScan_Define_ZBar
 

@@ -317,8 +317,8 @@
     [[self stillImageOutput] captureStillImageAsynchronouslyFromConnection:stillImageConnection
                                                          completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error)
      {
-         [self stopScan];
-         
+//         [self stopScan];
+     
          if (imageDataSampleBuffer)
          {
              NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
